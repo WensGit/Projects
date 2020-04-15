@@ -23,7 +23,7 @@ public class CompanyController {
 
 	    return ResponseEntity.ok().body(company);
 	}
-	 
+	
 	@PostMapping(value = "/company/create")
 	public ResponseEntity<Company> createCompany(@RequestBody Company request) {
 //	    boolean isIdDuplicated = productDB.stream()
