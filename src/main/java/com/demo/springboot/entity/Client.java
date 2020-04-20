@@ -1,26 +1,46 @@
-package com.demo.springboot.model;
+package com.demo.springboot.entity;
 
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "CLIENT")
 public class Client implements Serializable {
 
 	private static final long serialVersionUID = -7077885864255578859L;
-	private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "ID")
+	private int id;
+	@Column(name = "COMPANY_ID", length = 255)
 	private Long companyId;
+	@Column(name = "NAME", length = 255)
 	private String name;
+	@Column(name = "EMAIL", length = 255)
 	private String email;
+	@Column(name = "PHONE", length = 255)
 	private String phone;
+	@Column(name = "CREATED_BY", length = 255)
 	private String createdBy;
+	@Column(name = "CREATED_AT")
 	private Date createdAt;
+	@Column(name = "UPDATED_BY", length = 255)
 	private String updatedBy;
+	@Column(name = "UPDATED_AT")
 	private Date updatedAt;
 
-	public Long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

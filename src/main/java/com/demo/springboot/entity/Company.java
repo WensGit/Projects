@@ -1,4 +1,4 @@
-package com.demo.springboot.model;
+package com.demo.springboot.entity;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -8,30 +8,41 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "COMPANY")
 public class Company implements Serializable {
 
 	private static final long serialVersionUID = -7415170392789855903L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	@Column(length = 50)
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "ID")
+	private int id;
+	@Column(name = "NAME", length = 255)
 	private String name;
-	@Column(length = 200)
+	@Column(name = "ADDRESS", length = 255)
 	private String address;
-	@Column(length = 50)
+	@Column(name = "CREATED_BY", length = 255)
 	private String createdBy;
+	@Column(name = "CREATED_AT")
 	private Date createdAt;
-	@Column(length = 50)
+	@Column(name = "UPDATED_BY", length = 255)
 	private String updatedBy;
+	@Column(name = "UPDATED_AT")
 	private Date updatedAt;
 
-	public Long getId() {
+	@Override
+	public String toString() {
+		return "Company [id=" + id + ", name=" + name + ", address=" + address + ", createdBy=" + createdBy
+				+ ", createdAt=" + createdAt + ", updatedBy=" + updatedBy + ", updatedAt=" + updatedAt + "]";
+	}
+
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -81,12 +92,6 @@ public class Company implements Serializable {
 
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
-	}
-
-	@Override
-	public String toString() {
-		return "Company [id=" + id + ", name=" + name + ", address=" + address + ", createdBy=" + createdBy
-				+ ", createdAt=" + createdAt + ", updatedBy=" + updatedBy + ", updatedAt=" + updatedAt + "]";
 	}
 
 }

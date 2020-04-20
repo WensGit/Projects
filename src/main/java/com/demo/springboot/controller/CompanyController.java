@@ -1,48 +1,107 @@
 package com.demo.springboot.controller;
 
-import java.net.URI;
+import java.util.List;
 
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.demo.springboot.model.Company;
+import com.demo.springboot.entity.Company;
+import com.demo.springboot.service.CompanyService;
 
 @RestController
 public class CompanyController {
+	@Autowired
+	CompanyService companyService;
 
-	@GetMapping(value = "/company/{id}")
-	public ResponseEntity<Company> getCompany(@PathVariable("id") Long id) {
-		Company company = new Company();
-		company.setId(id);
-		company.setName("John");
-
-	    return ResponseEntity.ok().body(company);
+	/**
+	 * 依ID 查詢公司資料
+	 * 
+	 * @param id
+	 * @return
+	 */
+	@GetMapping(value = "/company/searchById")
+	@ResponseBody
+	public Company getCompany(@RequestParam(value = "id", required = true) int id) {
+		Company company = companyService.findById(id);
+		return company;
 	}
-	
-	@PostMapping(value = "/company/create")
-	public ResponseEntity<Company> createCompany(@RequestBody Company request) {
-//	    boolean isIdDuplicated = productDB.stream()
-//	                    .anyMatch(p -> p.getId().equals(request.getId()));
-//	    if (isIdDuplicated) {
-//	        return ResponseEntity.unprocessableEntity().build();
-//	    }
 
-		Company company = new Company();
-		company.setId(request.getId());
-		company.setName(request.getName());
-	    //productDB.add(product);
+	/**
+	 * 依名稱模糊查詢公司資料
+	 * 
+	 * @param name
+	 * @return
+	 */
+	@GetMapping(value = "/company/searchByName")
+	@ResponseBody
+	public List<Company> getCompanysByName(@RequestParam(value = "name", required = false) String name) {
+		List<Company> companyList = companyService.findByName(name);
+		return companyList;
+	}
 
-	    URI location = ServletUriComponentsBuilder
-	            .fromCurrentRequest()
-	            .path("/{id}")
-	            .buildAndExpand(company.getId())
-	            .toUri();
+	/**
+	 * 新增公司資料
+	 * 
+	 * @param company
+	 * @return
+	 */
+	@PutMapping(value = "/company/create")
+	@ResponseBody
+	public Company createCompany(@RequestBody Company company) {
 
-	    return ResponseEntity.created(location).body(company);
+		try {
+			company = companyService.create(company);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		return company;
+	}
+
+	/**
+	 * 更新公司資料
+	 * 
+	 * @param company
+	 * @return
+	 */
+	@PostMapping(value = "/company/save")
+	@ResponseBody
+	public Company saveCompany(@RequestBody Company company) {
+		try {
+			company = companyService.update(company);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		return company;
+	}
+
+	/**
+	 * 刪除公司資料
+	 * 
+	 * @param id
+	 * @return
+	 */
+	@DeleteMapping(value = "/company/delById")
+	@ResponseBody
+	public String deleteCompanyById(@RequestParam(value = "id", required = true) Integer id) {
+
+		try {
+			companyService.deleteById(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "FAILD :" + e.getMessage();
+		}
+
+		return "SUCCESS";
 	}
 }
