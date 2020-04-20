@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +17,7 @@ import com.demo.springboot.entity.Company;
 import com.demo.springboot.service.CompanyService;
 
 @RestController
+@RequestMapping("/company")
 public class CompanyController {
 	@Autowired
 	CompanyService companyService;
@@ -26,7 +28,7 @@ public class CompanyController {
 	 * @param id
 	 * @return
 	 */
-	@GetMapping(value = "/company/searchById")
+	@GetMapping(value = "/searchById")
 	@ResponseBody
 	public Company getCompany(@RequestParam(value = "id", required = true) int id) {
 		Company company = companyService.findById(id);
@@ -39,7 +41,7 @@ public class CompanyController {
 	 * @param name
 	 * @return
 	 */
-	@GetMapping(value = "/company/searchByName")
+	@GetMapping(value = "/searchByName")
 	@ResponseBody
 	public List<Company> getCompanysByName(@RequestParam(value = "name", required = false) String name) {
 		List<Company> companyList = companyService.findByName(name);
@@ -52,7 +54,7 @@ public class CompanyController {
 	 * @param company
 	 * @return
 	 */
-	@PutMapping(value = "/company/create")
+	@PutMapping(value = "/create")
 	@ResponseBody
 	public Company createCompany(@RequestBody Company company) {
 
@@ -72,7 +74,7 @@ public class CompanyController {
 	 * @param company
 	 * @return
 	 */
-	@PostMapping(value = "/company/save")
+	@PostMapping(value = "/save")
 	@ResponseBody
 	public Company saveCompany(@RequestBody Company company) {
 		try {
@@ -91,7 +93,7 @@ public class CompanyController {
 	 * @param id
 	 * @return
 	 */
-	@DeleteMapping(value = "/company/delById")
+	@DeleteMapping(value = "/delById")
 	@ResponseBody
 	public String deleteCompanyById(@RequestParam(value = "id", required = true) Integer id) {
 
