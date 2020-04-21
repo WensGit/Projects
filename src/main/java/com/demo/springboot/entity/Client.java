@@ -27,9 +27,9 @@ public class Client implements Serializable {
 	private String email;
 	@Column(name = "PHONE", length = 255)
 	private String phone;
-	@Column(name = "CREATED_BY", length = 255)
+	@Column(name = "CREATED_BY", updatable = false, length = 255)
 	private String createdBy;
-	@Column(name = "CREATED_AT")
+	@Column(name = "CREATED_AT", updatable = false)
 	private Date createdAt;
 	@Column(name = "UPDATED_BY", length = 255)
 	private String updatedBy;

@@ -2,12 +2,17 @@ package com.demo.springboot.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -23,19 +28,23 @@ public class Company implements Serializable {
 	private String name;
 	@Column(name = "ADDRESS", length = 255)
 	private String address;
-	@Column(name = "CREATED_BY", length = 255)
+	@Column(name = "CREATED_BY", updatable = false, length = 255)
 	private String createdBy;
-	@Column(name = "CREATED_AT")
+	@Column(name = "CREATED_AT", updatable = false)
 	private Date createdAt;
 	@Column(name = "UPDATED_BY", length = 255)
 	private String updatedBy;
 	@Column(name = "UPDATED_AT")
 	private Date updatedAt;
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "COMPANY_ID", insertable = false, updatable = false)
+	private List<Client> clientList;
 
 	@Override
 	public String toString() {
 		return "Company [id=" + id + ", name=" + name + ", address=" + address + ", createdBy=" + createdBy
-				+ ", createdAt=" + createdAt + ", updatedBy=" + updatedBy + ", updatedAt=" + updatedAt + "]";
+				+ ", createdAt=" + createdAt + ", updatedBy=" + updatedBy + ", updatedAt=" + updatedAt + ", clientList="
+				+ clientList + "]";
 	}
 
 	public int getId() {
@@ -92,6 +101,14 @@ public class Company implements Serializable {
 
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	public List<Client> getClientList() {
+		return clientList;
+	}
+
+	public void setClientList(List<Client> clientList) {
+		this.clientList = clientList;
 	}
 
 }
