@@ -58,7 +58,7 @@ public class CompanyController {
 	 * @return
 	 */
 	@PreAuthorize("hasRole('OPERATOR')")
-	@PutMapping(value = "/create")
+	@PostMapping(value = "/create")
 	@ResponseBody
 	public Company createCompany(@RequestBody Company company) {
 
@@ -79,7 +79,7 @@ public class CompanyController {
 	 * @return
 	 */
 	@PreAuthorize("hasRole('MANAGER')")
-	@PostMapping(value = "/save")
+	@PutMapping(value = "/save")
 	@ResponseBody
 	public Company saveCompany(@RequestBody Company company) {
 		try {

@@ -20,7 +20,7 @@ public class Client implements Serializable {
 	@Column(name = "ID")
 	private int id;
 	@Column(name = "COMPANY_ID", length = 255)
-	private Long companyId;
+	private int companyId;
 	@Column(name = "NAME", length = 255)
 	private String name;
 	@Column(name = "EMAIL", length = 255)
@@ -44,11 +44,11 @@ public class Client implements Serializable {
 		this.id = id;
 	}
 
-	public Long getCompanyId() {
+	public int getCompanyId() {
 		return companyId;
 	}
 
-	public void setCompanyId(Long companyId) {
+	public void setCompanyId(int companyId) {
 		this.companyId = companyId;
 	}
 

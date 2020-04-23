@@ -58,7 +58,7 @@ public class ClientController {
 	 * @return
 	 */
 	@PreAuthorize("hasRole('OPERATOR')")
-	@PutMapping(value = "/create")
+	@PostMapping(value = "/create")
 	@ResponseBody
 	public Client createClient(@RequestBody Client client) {
 
@@ -79,7 +79,7 @@ public class ClientController {
 	 * @return
 	 */
 	@PreAuthorize("hasRole('MANAGER')")
-	@PostMapping(value = "/save")
+	@PutMapping(value = "/save")
 	@ResponseBody
 	public Client saveClient(@RequestBody Client client) {
 		try {
