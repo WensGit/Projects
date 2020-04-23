@@ -21,7 +21,7 @@ public class Company implements Serializable {
 
 	private static final long serialVersionUID = -7415170392789855903L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "ID")
 	private int id;
 	@Column(name = "NAME", length = 255)
@@ -36,6 +36,7 @@ public class Company implements Serializable {
 	private String updatedBy;
 	@Column(name = "UPDATED_AT")
 	private Date updatedAt;
+	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "COMPANY_ID", insertable = false, updatable = false)
 	private List<Client> clientList;

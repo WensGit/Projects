@@ -3,6 +3,7 @@ package com.demo.springboot.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,6 +29,7 @@ public class ClientController {
 	 * @param id
 	 * @return
 	 */
+	@PreAuthorize("hasAnyRole('MANAGER','OPERATOR')")
 	@GetMapping(value = "/searchById")
 	@ResponseBody
 	public Client getClient(@RequestParam(value = "id", required = true) int id) {
@@ -41,6 +43,7 @@ public class ClientController {
 	 * @param name
 	 * @return
 	 */
+	@PreAuthorize("hasAnyRole('MANAGER','OPERATOR')")
 	@GetMapping(value = "/searchByName")
 	@ResponseBody
 	public List<Client> getClientsByName(@RequestParam(value = "name", required = false) String name) {
@@ -54,6 +57,7 @@ public class ClientController {
 	 * @param client
 	 * @return
 	 */
+	@PreAuthorize("hasRole('OPERATOR')")
 	@PutMapping(value = "/create")
 	@ResponseBody
 	public Client createClient(@RequestBody Client client) {
@@ -74,6 +78,7 @@ public class ClientController {
 	 * @param client
 	 * @return
 	 */
+	@PreAuthorize("hasRole('MANAGER')")
 	@PostMapping(value = "/save")
 	@ResponseBody
 	public Client saveClient(@RequestBody Client client) {
@@ -93,6 +98,7 @@ public class ClientController {
 	 * @param id
 	 * @return
 	 */
+	@PreAuthorize("hasRole('MANAGER')")
 	@DeleteMapping(value = "/delById")
 	@ResponseBody
 	public String deleteClientById(@RequestParam(value = "id", required = true) Integer id) {

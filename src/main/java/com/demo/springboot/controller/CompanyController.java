@@ -3,6 +3,7 @@ package com.demo.springboot.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,6 +29,7 @@ public class CompanyController {
 	 * @param id
 	 * @return
 	 */
+	@PreAuthorize("hasAnyRole('MANAGER','OPERATOR')")
 	@GetMapping(value = "/searchById")
 	@ResponseBody
 	public Company getCompany(@RequestParam(value = "id", required = true) int id) {
@@ -41,6 +43,7 @@ public class CompanyController {
 	 * @param name
 	 * @return
 	 */
+	@PreAuthorize("hasAnyRole('MANAGER','OPERATOR')")
 	@GetMapping(value = "/searchByName")
 	@ResponseBody
 	public List<Company> getCompanysByName(@RequestParam(value = "name", required = false) String name) {
@@ -54,6 +57,7 @@ public class CompanyController {
 	 * @param company
 	 * @return
 	 */
+	@PreAuthorize("hasRole('OPERATOR')")
 	@PutMapping(value = "/create")
 	@ResponseBody
 	public Company createCompany(@RequestBody Company company) {
@@ -74,6 +78,7 @@ public class CompanyController {
 	 * @param company
 	 * @return
 	 */
+	@PreAuthorize("hasRole('MANAGER')")
 	@PostMapping(value = "/save")
 	@ResponseBody
 	public Company saveCompany(@RequestBody Company company) {
@@ -93,6 +98,7 @@ public class CompanyController {
 	 * @param id
 	 * @return
 	 */
+	@PreAuthorize("hasRole('MANAGER')")
 	@DeleteMapping(value = "/delById")
 	@ResponseBody
 	public String deleteCompanyById(@RequestParam(value = "id", required = true) Integer id) {
