@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.demo.springboot.dao.ClientDao;
 import com.demo.springboot.entity.Client;
@@ -41,6 +42,23 @@ public class ClientServiceImpl implements ClientService {
 		client.setCreatedAt(new Date());
 		client.setCreatedBy("test");
 		return ClientDao.save(client);
+	}
+
+	@Transactional
+	@Override
+	public Boolean createMulti(List<Client> clients) throws Exception {
+		Integer result = 0;
+		for(Client client : clients){
+			if (ClientDao.existsById(client.getId())) {
+				throw new Exception("Data Exist");
+			}
+			client.setCreatedAt(new Date());
+			client.setCreatedBy("test");
+			ClientDao.save(client);
+			result++;
+		}
+		
+		return result.equals(clients.size());
 	}
 
 	@Override

@@ -9,9 +9,11 @@ public interface ClientService {
 
 	public List<Client> findByName(String name);
 
-	public Client create(Client company) throws Exception;
+	public Client create(Client client) throws Exception;
 
-	public Client update(Client company) throws Exception;
+	public Boolean createMulti(List<Client> clients) throws Exception;
+
+	public Client update(Client client) throws Exception;
 
 	public Boolean deleteById(int id) throws Exception;
 

@@ -71,6 +71,27 @@ public class ClientController {
 
 		return client;
 	}
+	
+	/**
+	 * 新增多筆用戶資料
+	 * 
+	 * @param client
+	 * @return
+	 */
+	@PreAuthorize("hasRole('OPERATOR')")
+	@PostMapping(value = "/createMulti")
+	@ResponseBody
+	public String createMultiClient(@RequestBody List<Client> clients) {
+		Boolean result =false;
+		try {
+			result = clientService.createMulti(clients);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		return result?"SUCCESS":"FAILD";
+	}
 
 	/**
 	 * 更新用戶資料
